@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html ng-app="vida">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><%= @title %></title>
+		<link rel="stylesheet" type="text/css" href="<%= url("/css/lib/photon.css")%>">
+		<link rel="stylesheet" type="text/css" href="<%= url("/css/core/app.css")%>">
+	</head>
+	<body ng-controller="challengeCtrl">
+		<div class="window">
+			<header class="toolbar toolbar-header">
+      			<h1 class="title"><%= @title %></h1>
+      			<div class="toolbar-actions ng-cloak">
+					<button ng-click="onInfo()" class="btn btn-default">
+						<span ng-class="generals.currentTemplate=='info.html'?'icon-menu':'icon-help'" class="icon icon-help"></span>
+					</button>
+					<button ng-click="startInput()" class="btn btn-default">
+						<span class="icon icon-plus-circled"></span>
+						Nuevo ingreso
+					</button>
+      			</div>
+			</header>
+			<div class="window-content">
+				<div class="pane-group">
+					<div class="numbers">
+						<div class="ng-cloak" ng-include="generals.currentTemplate"></div>
+					</div>
+				</div>
+			</div>
+			<footer class="toolbar toolbar-footer">
+				<h1 class="title">My challenge - Ray Rojas.</h1>
+			</footer>
+		</div>
+		<script type="text/ng-template" id="info.html">
+			<div class="text-center p-t-lg">
+				<h1>Challenge - Ray Rojas</h1>
+				<p>
+					Este es un ejemplo del uso de <a href="http://photonkit.com/" target="_blank">Photon</a>, con angular y sinatra. <br>
+					- <a href="http://www.rayrojas.info/" target="_blank">Ry</a>
+				</p>
+			</div>
+		</script>
+		<script type="text/ng-template" id="numbers.html">
+			<form name="formNumbers" ng-submit="numbers.do.submit()">
+				<div class="form-group">
+					<label>Solo números enteros</label>
+					<input type="number" ng-pattern="/^[0-9]{1,}$/" required class="form-control" name="number" ng-model="numbers.model.input">
+					<em ng-show="formNumbers.number.$error.number" class="text-help">Por favor ingrese solo números enteros.</em>
+					<em ng-show="formNumbers.number.$error.pattern" class="text-help">Por favor ingrese solo números enteros.</em>
+				</div>
+				<div class="form-group text-right">
+					<button type="submit" class="btn btn-mini btn-primary">Agregar número</button>
+					<button type="button" ng-click="numbers.do.sort()" class="btn btn-mini btn-positive">Ordenar</button>
+				</div>
+			</form>
+			<hr>
+			<div>
+				<span class="p" ng-repeat="t in generals.tmp.numbers">{{ t }}</span>
+			</div>
+			<div>
+				<span class="p" ng-repeat="t in generals.tmp.taken">{{ t }}</span><span ng-hide="numbers.model.ended">{{numbers.model.random}}</span>
+			</div>
+		</script>
+		<script src="<%= url('/js/lib/angular/angular.min.js') %>"></script>
+		<script src="<%= url('/js/lib/underscore/underscore-min.js') %>"></script>
+		<script src="<%= url('/js/core/index.js') %>"></script>		
+	</body>
+</html>
